@@ -1,0 +1,33 @@
+<div class = "listaElevi">	
+	<div class="select-container">
+		<span class="alin-span">Profiluri:</span>
+			<select class="alin-select" id="sort" ng-model="selectedProfil" ng-options="profil.denumireProfil for profil in allProfils" ng-change="getSpecializariForProfil(selectedProfil.denumireProfil)">
+			</select>
+	
+	</div>
+	<table class = "tabelElevi" >
+			<thead> 
+				<tr>
+					<th class="left-cell">ID</th>
+					<th class="midle-cell">Nume</th>
+					<th class="right-cell">Actiune</th>
+				</tr> 
+			</thead>
+			<tbody>
+
+				<tr ng-repeat="i in specs" >
+				
+					<td class="left-cell">{{i.id}}</td>
+					<td style="display:none"  id="specializare-name-txt-{{i.id}}" class="midle-cell">
+						<input ng-model="i.nume" type="text" >
+					</td>
+					<td id="specializare-name-{{i.id}}" class="midle-cell">{{i.nume}}</td>
+					<td class="right-cell">
+						<input type="button" class="btn btn-primary edit" id="specializare-edit{{i.id}}" ng-click="edited(i)" value="Editare">
+						<input type="button" class="btn btn-danger" ng-click="setDeleteModalData(i.id)" value="Stergere">
+					</td>	
+
+				</tr>
+			</tbody>
+	</table>
+</div>	

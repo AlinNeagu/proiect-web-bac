@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search</title>
+	<meta charset = "utf-8">
+		<link rel="stylesheet" href="CSS/login.css">
+		<script src="node_modules/jquery/dist/jquery.min.js">s</script>
+		<script src="node_modules/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="node_modules/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	 	<script src="node_modules/angular/angular.min.js"></script>
+	 	<script src="node_modules/angular-route/angular-route.min.js"></script> 
+        <script src="JS/FileSaver.js"> </script>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+		
+		
+		<!--Icon Library-->
+		<link rel="stylesheet" href="node_modules/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel = "stylesheet" type = "text/css" href = "CSS/search.css">
+		<link rel = "stylesheet" type = "text/css" href = "CSS/form.css">
+        <link rel = "stylesheet" type = "text/css" href = "CSS/formDisciplina.css">
+    
+		<script type="text/javascript" src="JS/scriptHome.js"> </script>
+</head>
+
+<body ng-app="myApp" ng-controller="ListController">
+	<div class = "Menu" >
+        <ul>
+            <li ><a href = "search.html">Elev</a></li>
+            <li><a href = "raport.html">Raport</a></li>
+
+			
+			
+            <li style = "float:right"><a href="#user"><i ng-click="showLoginPopUp()" class="fa fa-user"></i></a></li>
+            <li style = "float:right"><a href="#email"><i class="fa fa-envelope"></i></a></li>
+			<li style = "float:right"><a href="#email"><i class="fa fa-download" ng-click="download()"></i></a></li>
+			
+        </ul>
+	</div>
+	
+	<div id = "cautaElev" >
+	
+			<div class="form-group" >
+			<input  class="btn btn-primary addnew pull-left" ng-show="isLogin" id = "myBtn" ng-click="takeLicee();showModalElev();"  value="Adaugă Elev">
+			<input  class="btn btn-primary addnew pull-left" ng-show="isLogin" ng-click="takeProfiluri();showModalLiceu();" id = "butonLiceu"  value="Adaugă Liceu">
+			 <input class = "btn btn-primary addnew pull-left" ng-show="isLogin" ng-click="showModalDisciplina()" id = "disciplinaBtn" value = "Adaugă disciplină">
+			<input class = "btn btn-primary addnew pull-left" ng-show="isLogin" ng-click="takeProfiluri();showModalSpecializare();" id = "specializareBtn" value = "Adaugă specializare">
+			<input class = "btn btn-primary addnew pull-left" ng-show="isLogin" ng-click="showModalProbe()" id = "probaBtn" value = "Adaugă proba">
+		</div>
+		<div class = "top">
+			<div class="bar">
+				<!-- Create a binding between the searchString model and the text field -->
+				<input type="text" ng-model="searchString" placeholder="Caută elev" />
+				
+			</div>
+		
+			<!--<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Operations
+				<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+				  <li><a href="#">HTML</a></li>
+				  <li><a href="#">CSS</a></li>
+				  <li><a href="#">JavaScript</a></li>
+				</ul>
+			  </div>-->
+			<div class = "sortare">
+				<label for="sort"><span>Sortează:</span>
+				
+						<select id="sort" name="field99">
+						  <option value="nume">alfabetic</option>
+						  <option value="medie">după medie</option>
+						  <option value="județ">după județ</option>
+						</select> 
+				</label>
+			</div>
+		</div>
+		
+		<div class = "elevi">
+		<div class="btn-group">
+		
+			<button type="button" ng-click="showOtherView(true,false,false,false,false);updateElevi();" class="btn btn-primary">Elevi</button>
+			<button type="button" ng-click="showOtherView(false,false,true,false,false);getProfiluri();" class="btn btn-primary">Profiluri</button>
+			<button type="button" ng-click="showOtherView(false,false,false,false,true);takeLicee()" class="btn btn-primary">Licee</button>
+			<!--<button type="button" ng-click="showOtherView(false,true,false,false,false);getSpecializari();" class="btn btn-primary">Probe</button> -->
+			<button type="button"ng-click="showOtherView(false,false,false,true,false);getProfiluri();" class="btn btn-primary">Specializari</button>
+		</div>
+		<display-elevi ng-show="showElevi==true"></display-elevi>
+		<!-- <display-probe ng-show="showProbe==true"></display-probe> -->
+		<display-profiluri ng-show="showProfiluri==true"></display-profiluri>
+		<display-specializari ng-show="showSpecializari==true"></display-specializari>
+		<display-licee ng-show="showLicee==true"></display-licee>
+		
+		<div class = "detaliiElevi">
+			<table class = "tabelDetalii">
+				<tr>
+					<th>Nume: </th>
+					<td> {{selectedItem.nume}}</td>
+				</tr>
+				<tr>
+					<th>Prenume: </th>
+					<td> {{selectedItem.prenume}}</td>
+				</tr>
+				<tr>
+					<th>Inițiala tatălui: </th>
+					<td> {{selectedItem.initialaTatalui}}</td>
+				</tr>
+				<tr>
+					<th>Liceu: </th>
+					<td> {{selectedItem.liceu.nume}}</td>
+				</tr>
+				<tr>
+					<th>Specializare: </th>
+					<td> {{selectedItem.spec.nume}}</td>
+				</tr>
+			</table>
+			
+			<div class = "butonNote">
+				<!--<button ng-click="show=!show" ng-click="veziNotele(i)">Vezi notele</button>-->
+				<!-- ng-show="show" <button ng-click="show=!show" ng-click="veziNotele(i)" type="button" class="btn btn-info">Vezi notele</button>-->
+				
+			</div>
+
+			<table class = "tabelNote" >
+				<tr>
+					<th><i class = "fa fa-graduation-cap" ></i></th>
+					<th>Nota</th>
+					<th>Contestatie</th>
+					<th>Nota finala</th>
+				</tr>
+				<tr>
+                    <th>{{selectedItem.limbaMaterna.nume}}</th>
+                    <th>{{selectedItem.limbaMaterna.nota}}</th>
+                    <th>{{selectedItem.limbaMaterna.notaContestatie}}</th>
+                    <th>{{selectedItem.limbaMaterna.notaFinala}}</th>
+				</tr>
+				<tr>
+					<th>{{selectedItem.probaObligatorie.nume}}</th>
+					<th>{{selectedItem.probaObligatorie.nota}}</th>
+					<th>{{selectedItem.probaObligatorie.notaContestatie}}</th>
+					<th>{{selectedItem.probaObligatorie.notaFinala}}</th>
+				</tr>
+				<tr>
+					<th>{{selectedItem.probaAlegere.nume}}</th>
+					<th>{{selectedItem.probaAlegere.nota}}</th>
+					<th>{{selectedItem.probaAlegere.notaContestatie}}</th>
+					<th>{{selectedItem.probaAlegere.notaFinala}}</th>
+				</tr>
+				<tr>
+					<th>{{selectedItem.limbaModerna.nume}}</th>
+					<th>{{selectedItem.limbaModerna.nota}}</th>
+					<th>---</th>
+					<th>{{selectedItem.limbaModerna.nota}}</th>
+				</tr>
+			</table>
+		</div> 
+		</div>
+        </div>
+	
+	<div id = "myModal" class = "modal"  >
+		<div class="modal-content" ng-show="adaugare">
+		  <span class="close" id="closeElev" ng-click="closeModalElev()">&times;</span>
+			<div class="form-style-5"    >
+				<form   ng-submit="addNew(elev)">
+				<fieldset>
+			
+					<legend><span class="number">1</span> Completează datele elevului</legend>
+					<ul>
+						<li>
+							<input type="text" name="field1"  placeholder="Nume *" ng-model = "elev.numeElev" required>
+							<input type="text" name="field2"  placeholder="Prenume *" ng-model = "elev.prenumeElev" required>
+							<input type="text" name="field3"  placeholder="Inițiala tatălui *" ng-model = "elev.initialaTata" required>
+						</li>
+					</ul>
+
+
+
+
+					<label for="liceu">Unitate de învățământ:</label>
+					<select   id="choice" name="field4" ng-model="liceu"  ng-options="liceu.nume for liceu in choices.Liceu" ng-change="getProfiluriForUnitate(liceu.nume)" required>
+						<option value=''></option>
+					</select> 
+				
+				</fieldset>
+				
+				<fieldset>
+					<label>Profil</label>
+					<select ng-disabled="!liceu" ng-model="profil" ng-options="prof.denumireProfil for prof in liceu.profil" ng-change="getSpecializariForProfil(profil.denumireProfil)">
+						<option value=""></option>
+					</select>
+				</fieldset>	
+					
+					
+                <fieldset>
+				
+				<label for="specializare">Specializare</label>
+				<select id="specializari"  ng-disabled="!profil" ng-model="specializare" ng-options="specializare.nume for specializare in profil.specializare" ng-change="getProbeForSpecializare(specializare.nume)">
+			
+                    <option value=''></option>
+				
+				</select>      
+				</fieldset>
+				
+				<fieldset>
+				<legend><span class="number">2</span> Completează notele elevului</legend>
+				<ul>
+					<legend><span class="materie">-</span> Limba materna</legend>
+					<li>
+				
+						<select id="materna"  ng-disabled="!specializare" ng-model="limbaMaterna"
+								ng-options="x.nume for x in specializare.LimbaMaterna">
+			
+							<option value=''></option>
+				
+						</select>      
+						<input type="text" name="field1" ng-model = "limbaMaterna.nota" placeholder="Notă *">
+						<input type="text" name="field2" ng-model = "limbaMaterna.notaContestatie" placeholder="Contestație ">
+					
+					</li>
+					
+					<legend><span class="materie">-</span> Proba Obligatorie </legend>
+					<li><span>Disciplina obligatorie:</span><input type="checkbox"
+                                   ng-model="ObligatoriuOblig">
+                        <select class="form-control" id="numeProbaOblig" ng-disabled="!specializare || !liceu" ng-model="probaObligatorie" ng-options="probaObligatorie.nume for probaObligatorie  in specializare.probaObligatorie"><option value=''></option> </select>
+						<input type="text" name="field1" ng-model = "probaObligatorie.nota" placeholder="Notă *">
+						<input type="text" name="field2" ng-model = "probaObligatorie.notaContestatie" placeholder="Contestație ">
+						
+					</li>
+					<legend><span class="materie">-</span> Proba la Alegere </legend>
+					<li>
+                        <span>Disciplina la alegere:</span><input type="checkbox"
+                                   ng-model="ObligatoriuAleg">
+                        
+                    <select class="form-control" id="numeProbaAlegere" ng-disabled="!specializare || !liceu || !probaObligatorie" ng-model="probaAlegere" ng-options="probaAlegere.nume for probaAlegere  in specializare.probaAlegere"><option value=''></option> </select>
+						<input type="text" name="field1" ng-model = "probaAlegere.nota" placeholder="Notă *">
+						<input type="text" name="field2" ng-model = "probaAlegere.notaContestatie" placeholder="Contestație ">
+						
+					</li>
+					<label for="limbaModerna">Limba modernă</label>
+				<select id="lbModerna" ng-model="limbaModerna" ng-options="limbaMaterna.nume for limbaMaterna in specializare.LimbaModerna" name="field4">
+				
+				</select>  
+					<li>
+						<input type="text" name="field1" ng-model = "limbaModerna.nota" placeholder="Notă *">
+					</li>
+				</ul>
+				</fieldset>
+				<input type="submit" ng-click = "addElev()" value="Adaugă" />
+				</form>
+				</div>
+	  </div>
+		<!-- edit elev -->
+		<div class="modal-content" ng-show="!adaugare">
+		  <span class="close" id="closeElev" ng-click="closeModalElev();adaugare=true;">&times;</span>
+			<div class="form-style-5">
+				<form   ng-submit="addNew(elev)">
+				<fieldset>
+			
+					<legend><span class="number">1</span> Completează datele elevului</legend>
+					<ul>
+						<li>
+							<input type="text" name="field1"  placeholder="Nume *" ng-model = "elevEditat.nume" required>
+							<input type="text" name="field2"  placeholder="Prenume *" ng-model = "elevEditat.prenume" required>
+							<input type="text" name="field3"  placeholder="Inițiala tatălui *" ng-model = "elevEditat.initialaTatalui" required>
+						</li>
+					</ul>
+
+					<label for="liceu">Unitate de învățământ:</label>
+					<select   id="choice" name="field4" ng-model="elevEditat.liceu"  ng-options="liceu.nume for liceu in choices.Liceu" ng-change="getProfiluriForUnitate(elevEditat.liceu.nume)" required>
+						<option value=''></option>
+					</select> 
+				
+				</fieldset>
+				
+				<fieldset>
+					<label>Profil</label>
+					<select ng-disabled="!elevEditat.liceu" ng-model="elevEditat.profil" ng-options="prof.denumireProfil for prof in profiluri" ng-change="getSpecializariForProfil(elevEditat.profil.denumireProfil)">
+						<option value=""></option>
+					</select>
+				</fieldset>	
+					
+					
+                <fieldset>
+				
+				<label for="specializare">Specializare</label>
+				<select id="specializari"  ng-disabled="!elevEditat.profil" ng-model="elevEditat.spec" ng-options="specializare.nume for specializare in specs" ng-change="getProbeForSpecializare(elevEditat.spec.nume)">
+			
+                    <option value=''></option>
+				
+				</select>      
+				</fieldset>
+				
+				<fieldset>
+				<legend><span class="number">2</span> Completează notele elevului</legend>
+				<ul>
+					<legend><span class="materie">-</span> Limba materna</legend>
+					<li>
+				
+						<select id="materna"  ng-disabled="!elevEditat.spec" ng-model="elevEditat.limbaMaterna"
+								ng-options="x.nume for x in specializare.LimbaMaterna">
+			
+							<option value=''></option>
+				
+						</select>      
+						<input type="text" name="field1" ng-model = "note.lMaterna.nota" placeholder="Notă *">
+						<input type="text" name="field2" ng-model = "note.lMaterna.notaContestatie" placeholder="Contestație ">
+					
+					</li>
+					
+					<legend><span class="materie">-</span> Proba Obligatorie </legend>
+					<li><span>Disciplina obligatorie:</span><input type="checkbox"
+                                   ng-model="ObligatoriuOblig">
+                        <select class="form-control" id="numeProbaOblig" ng-disabled="!elevEditat.spec" ng-model="elevEditat.probaObligatorie" ng-options="probaObligatorie.nume for probaObligatorie  in specializare.probaObligatorie"><option value=''></option> </select>
+						<input type="text" name="field1" ng-model =" note.pObligatorie.nota" placeholder="Notă *">
+						<input type="text" name="field2" ng-model = "note.pObligatorie.notaContestatie" placeholder="Contestație ">
+						
+					</li>
+					<legend><span class="materie">-</span> Proba la Alegere </legend>
+					<li>
+                        <span>Disciplina la alegere:</span><input type="checkbox"
+                                   ng-model="ObligatoriuAleg">
+                        
+                    <select class="form-control" id="numeProbaAlegere" ng-disabled="!elevEditat.spec" ng-model="elevEditat.probaAlegere" ng-options="probaAlegere.nume for probaAlegere  in specializare.probaAlegere"><option value=''></option> </select>
+						<input type="text" name="field1" ng-model = "note.pAlegere.nota" placeholder="Notă *">
+						<input type="text" name="field2" ng-model = "note.pAlegere.notaContestatie" placeholder="Contestație ">
+						
+					</li>
+					<label for="limbaModerna">Limba modernă</label>
+				<select id="lbModerna" ng-model="elevEditat.limbaModerna" ng-options="limbaMaterna.nume for limbaMaterna in specializare.LimbaModerna" name="field4">
+				
+				</select>  
+					<li>
+						<input type="text" name="field1" ng-model = "note.lModerna.nota" placeholder="Notă *">
+					</li>
+				</ul>
+				</fieldset>
+				<input type="submit" ng-click = "editElevDB();adaugare=true;" value="Edit" />
+				</form>
+				</div>
+	  </div>
+    </div>
+
+    <!-- adaugare disciplina-->
+    <div id = "modalDisciplina" class = "modal" >
+            <div class = "modal-content">
+                <span class="close" id="closeDisciplina" ng-click="closeModalDisciplina()">&times;</span>
+                <div class="form-style-6" >
+				    <form ng-submit="insertDisciplina()">  
+                        <fieldset>
+                            <legend><span class="number">1</span> Adaugă o disciplină</legend>
+                                <ul>
+                                   <li>
+                                      <input type="text" name="field1" placeholder="Nume *" ng-model = "denumireDisciplina" required>
+                                   </li>
+                                </ul>
+                        </fieldset>
+                    <input type="submit"  value="Adaugă" />            
+                    </form>
+                </div>
+            </div>
+     </div>
+	
+
+<!-- adaugare licee -->
+	<div id = "modalLiceu" class = "modal"   >
+		<div class="modal-content" ng-show="adaugare">
+		<span class="close" id="closeLiceu" ng-click="closeModalLiceu()">&times;</span>
+			<div class="form-style-5"   >
+				<form  ng-submit="addNew(liceu)">
+				<fieldset>
+				
+				<legend><span class="number">1</span> Completează datele liceului:</legend>
+				<ul>
+					<li>
+						<label>Nume liceu</label><input type="text" name="field1"  placeholder="Nume liceu *" ng-model = "liceu.numeLiceu" required>
+                       
+						<label>Judet</label><input type="text" name="field2"  placeholder="Judet *" ng-model = "liceu.judet" required>
+                     
+					</li>
+				</ul>
+				
+				
+				<label for="liceu">Profil liceu:</label>
+                    <div ng-repeat="profilAles in profiluriLicee">
+				        <select   id="choice" name="field4" ng-model="profilAles.liceuProfil" ng-options="profil.denumireProfil for profil in profiluri" >
+				
+                        <option value=''></option>
+                        </select> 
+                        
+                      
+                    </div>
+                     
+                </fieldset>
+				
+              <div class="form-group" >
+                  <input  ng-click="incrementation()" type="button" id = "profilNou"  value="Alt profil(existent) ">
+				<input   type="button" id = "butonProfil"  value="Adaugă Profil Nou">
+             </div>
+				<input type="submit" ng-click = "insertLiceu()" value="Adaugă Liceu" />
+				</form>
+                
+				</div>
+	  </div>
+        
+    <div class="modal-content" ng-show="!adaugare">
+		<span class="close" id="closeLiceu" ng-click="closeModalLiceu();adaugare=true;">&times;</span>
+			<div class="form-style-5"   >
+				<form  ng-submit="addNew(liceu)">
+				<fieldset>
+				
+				<legend><span class="number">1</span> Completează datele liceului:</legend>
+				<ul>
+					<li>
+						<label>Nume liceu</label><input type="text" name="field1"  placeholder="Nume liceu *" ng-model = "liceuEditat.nume" required>
+                       
+						<label>Judet</label><input type="text" name="field2"  placeholder="Judet *" ng-model = "liceuEditat.judet" required>
+                     
+					</li>
+				</ul>
+				
+				
+				<label for="liceu">Profil liceu:</label>
+                    <div ng-repeat="profilAles in liceuEditat.idProfil">
+						
+				        <select id="choice" name="field4" ng-model="liceuEditat.idProfil[$index]"  ng-options="profil.denumireProfil for profil in allProfils" >
+				
+                        <option ng-value=""></option>
+                        </select> 
+						
+                     
+                    </div>
+                     
+                </fieldset>
+				<input type="submit" ng-click = "editLiceu();adaugare=true;" value="Editare Liceu" />
+				</form>
+                
+				</div>
+	  </div>
+  </div>
+    
+
+<!--adaugare Specializare pentru un profil existent-->
+    
+<div id = "modalSpecializare" class = "modal" >
+    <div class = "modal-content" ng-show="adaugare">
+        <span class="close" id="closeSpecializare" ng-click="closeModalSpecializare()">&times;</span>
+        <div class = "form-style-5">
+            <form ng-submit="insertSpecializare()">
+               <fieldset>
+                    <legend><span class="number">1</span>Selectează profilul</legend>
+                   
+                    <label>Denumirea specializării</label>
+                    <div>
+						<input  type="text" name="field2"  placeholder="Specializare *"  ng-model = "denumireSpecializare" required >
+                    </div>
+                   
+                    <label for="liceu">Profil specializare:</label>
+                    
+				        <select id="choice" name="field4" ng-model="profilAles" 
+                                ng-options="profil.denumireProfil for profil in profiluri">
+                        <option value=''></option>
+                        </select> 
+      
+                    <input type="submit"  ng-click="insertSpecializare(profilAles.idProfil,denumireSpecializare)" value="Adaugă" />
+                </fieldset>
+            </form>
+        </div>    
+    </div>
+    
+     <div class = "modal-content"ng-show=!adaugare>
+        <span class="close" id="closeSpecializare" ng-click="closeModalSpecializare();adaugare=true;">&times;</span>
+        <div class = "form-style-5">
+            <form ng-submit="editSpecializare(specEditata)">
+                <fieldset>
+                    
+                    
+                    <label>Denumirea specializării</label>
+                    <div>
+						<input  type="text" name="field2"  placeholder="Specializare *"  ng-model = "specEditata.nume" required >
+                    </div>
+                    
+                    <legend><span class="number">1</span>Editează specializare</legend>
+                    <label for="liceu">Profil specializare:</label>
+                    
+				        <select id="choice" name="field4" ng-model="specEditata.profil"  ng-options="profil.denumireProfil for profil in allProfils" >
+				
+                        <option ng-value=""></option>
+                        </select> 
+						
+                     
+                    
+      
+                    <input type="submit"  ng-click="editSpecializare(specEditata);adaugare=true;" value="Editeaza specializare" />
+                </fieldset>
+            </form>
+        </div>    
+    </div>
+</div>
+    
+    
+	<!-- adaugare probe pentru specializare existenta -->
+	<div id = "modalProbe" class = "modal" >
+    <div class = "modal-content">
+        <span class="close" id="closeProbe" ng-click="closeModalProbe()" ng-click="closeModalProbe()">&times;</span>
+        <div class = "form-style-5">
+            <form >
+                <fieldset>
+                    <legend><span class="number">1</span>Adauga proba</legend>
+                    <label for="liceu">Specializare</label>
+				        <select id="choice" name="field4" ng-model="spec" 
+                                ng-options="specProbe.nume for specProbe in specializariForProbe">
+                        <option value=''></option>
+                        </select> 
+                    
+                    <label>Disciplina</label>
+                    <div id="bla">
+						<span>Obligatorie</span>
+						<input type="checkbox" ng-model="obligatorie" ng-disabled="alegere || moderna || materna">
+						<span>Alegere</span>
+						<input type="checkbox" ng-model="alegere" ng-disabled="obligatorie || moderna || materna">
+						<span>Moderna</span>
+						<input type="checkbox" ng-model="moderna" ng-disabled="alegere || obligatorie || materna">
+						<span>Materna</span>
+						<input type="checkbox" ng-model="materna" ng-disabled="alegere || moderna || obligatorie">
+						
+						<select id="choice" name="field4" ng-model="disc" 
+                                ng-options="discProbe.nume for discProbe in disciplinaForProba">
+                        <option value=''></option>
+                        </select> 
+                    </div>
+                    <input type="submit" ng-click="addProba(spec.id,disc.id,materna,moderna,obligatorie)" value="Adaugă" />
+                </fieldset>
+            </form>
+        </div>    
+    </div>
+</div>
+    <login-popup></login-popup>
+	
+<!-- adaugare Profiluri -->
+<div id = "modalProfil" class = "modal" >
+	<div class="modal-content">
+		<span class="close" id="closeProfil" ng-click="closeModalProfil()">&times;</span>
+		<div class="form-style-5" >
+			<form  ng-submit="addNew(profil)">
+				<fieldset>
+				
+				<legend><span class="number">1</span> Completează profilul</legend>
+				<ul>
+					<li><span>Denumire profil</span>
+						<input type="text" name="field1"  placeholder="Denumire Profil *" ng-model = "denumireProfil" required>
+                        <!--
+                        <span>Denumire specializari</span>
+                        <div ng-repeat="denumireSpecializare in specializari">
+						<input  type="text" name="field2"  placeholder="Specializare *"  ng-model = "denumireSpecializare" required >
+                        </div>
+                        -->
+					</li>
+				</ul>
+                   
+				<!--
+				 <input  ng-click="increment()" type="button" id = "specNoua"  value="Adauga o noua specializare">
+                -->
+                 <input type="submit" ng-click = "insertProfil()" value="Adaugă Profil" />
+				 
+				</fieldset>
+			</form>
+	  </div>
+  </div>
+</div>
+<!-- Modal alerta --> 
+    <div id = "modalDelete" class = "modal" >
+           <div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" ng-click="closeModalDelete();adaugare=true;">&times;</button>
+				<h4 class="modal-title">{{message.head}}r</h4>
+			  </div>
+			  <div class="modal-body">
+				<p>{{message.body}}</p>
+			  </div>
+			  <div class="modal-footer">
+			  	<button type="button" class="btn btn-primary" ng-click="deleteSpecializare();closeModalDelete();" ng-show="message.canAccept">De acord</button>
+				<button type="button" class="btn btn-default" ng-click="closeModalDelete();adaugare=true;">Inchide</button>
+			  </div>
+			</div>
+     </div>
+	
+<div id="working">
+	<img src="right.ico" id="right">
+	<img src="wrong.ico" id="wrong"> 
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<div id = "logIn" class = "modal" >
+    <div class = "modal-content" >
+		<span class="close" ng-click="closeLoginPopUp()">&times;</span>
+        <div class="user-detail">
+			<span><b>Username</b></span>
+			<input type="text" ng-model="username">
+			<br>
+			<span><b>Password</b></span>
+			<input type="password" ng-model="password">
+		</div>
+		<a ng-click="login(username,password)">Log in</a>
+    </div>
+</div>
+    

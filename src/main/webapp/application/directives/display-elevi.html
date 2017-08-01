@@ -1,0 +1,23 @@
+<div class = "listaElevi">
+	<table class = "tabelElevi" >
+		<thead> 
+			<tr>
+				<th class="left-cell">ID</th>
+				<th class="midle-cell">Nume</th>
+				<th class="right-cell">Actiune</th>
+			</tr> 
+		</thead>
+		<tbody>
+
+			<tr ng-repeat="i in items " ng-click = "showDetails(i)">
+				<td class="left-cell">{{i.id}}</td>
+				<td class="midle-cell">{{i.nume}} {{i.initialaTatalui}} {{i.prenume}}</td>
+				<td class="right-cell">
+					<input type="button" class="btn btn-primary edit" id="elevi-edit{{i.id}}" ng-click="editElev(i)" value="Editare">
+					<input type="button" class="btn btn-danger" ng-click="deleteElev(i.id)" value="Stergere">
+				</td>		
+			</tr>
+		</tbody>
+	</table>
+
+</div>

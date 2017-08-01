@@ -1,0 +1,63 @@
+
+#logIn h1{
+	color: green;
+}
+#logIn input{
+	display: inline;
+	float: right;
+	width: 70%;
+	float: left;
+	height: 30px;
+	margin-bottom: 10px;
+	
+	padding-left: 10px;
+	
+}
+#logIn input:focus{
+	box-shadow: 1px 1px 5px;
+}
+#logIn .close{
+	float:right;
+	width: auto;
+	padding: 0px;
+}
+
+#logIn span{
+	display: inline;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 10px;
+	width: 25%;
+	text-align: right;
+	padding-right: 10px;
+	
+}
+#logIn .modal-content{
+	background-color: #505dc1;
+	width: 500px;
+}
+.user-detail{
+	display: inline-block;
+	width: 100%;
+	padding-top: 10px;
+	background-color: #6cafea;
+}
+
+#logIn a{
+	display: inline-block;
+	width: 50%;
+	margin-left: 25%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: #0c487c;
+	border-radius: 10px;
+	font-size: 23px;
+}
+
+#logIn a:hover{
+	background-color: #3ac33a;
+}

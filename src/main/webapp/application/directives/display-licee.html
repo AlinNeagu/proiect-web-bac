@@ -1,0 +1,26 @@
+<div class = "listaElevi" >	
+	<table class = "tabelElevi" >
+			<thead> 
+				<tr>
+					<th class="left-cell">ID</th>
+					<th class="midle-cell">Nume</th>
+					<th class="right-cell">Actiune</th>
+				</tr> 
+			</thead>
+			<tbody>
+
+				<tr ng-repeat="i in choices.Liceu" >
+					<td class="left-cell"> {{i.id}}</td>
+					<td style="display:none"  id="liceu-name-txt-{{i.id}}" class="midle-cell">
+						<input ng-model="i.nume" type="text" >
+					</td>
+					<td id="liceu-name-{{i.id}}" class="midle-cell">{{i.nume}}</td>
+					<td class="right-cell">						
+					<input type="button" class="btn btn-primary edit" id="liceu-edit{{i.id}}" ng-click="edit(i)" value="Editare">
+					<input type="button" class="btn btn-danger" value="Stergere">
+					</td>	
+	
+				</tr>
+			</tbody>
+	</table>
+</div>	

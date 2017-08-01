@@ -1,0 +1,230 @@
+.Menu ul {
+    height: auto;
+    width: 1520px;
+	text-align: left;
+    /*background:  linear-gradient(to bottom, #000000 6%, #99ccff 100%);*/
+     background:  #36486b;
+    margin: 0 ;
+    padding: 0;
+    overflow: hidden;
+     position: fixed;
+    text-decoration: none;
+    list-style: none;
+}
+
+.Menu li{
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 14px 16px;
+    text-align: center;
+    text-decoration-color: #fefbd8;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Helvetica;
+    border-color: none;
+}
+
+
+.Menu  a {
+    text-decoration: none;
+    color: #d5f4e6;
+}
+
+
+.Menu li a:hover {
+	color: blue;
+    text-decoration: none;
+}
+
+
+body {
+
+  background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); 
+  background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); 
+  background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); 
+  background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); 
+  background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); 
+        
+}  
+ 
+*{
+	margin:0;
+	padding:0;
+}
+.table a {
+     text-align: center;
+}
+.generare-raport{
+    display: table-cell;
+}
+
+.cautare-elev{
+   display: table-cell;
+}
+
+.adaugare-elev{
+   display: table-cell;
+}
+
+span{
+    display:inline-block;
+    width: 350px;
+    
+}
+
+
+table{
+    text-align: center;
+	width: 1200px;
+    margin-top:100px;
+}
+thead th {
+    text-align: center;
+}
+table, th, td {
+   border: 1px solid black;
+    text-align: center;
+    }
+	
+	table td {
+		width: 50px;
+	}
+.rand{
+    display:inline-block;
+    
+}
+
+.formularAdaugare{
+    margin-left: 0;
+    margin-top:20px;
+}
+.newDiv{
+    margin-left: 50px;
+  
+}
+tbody:nth-child(odd) {
+  background-color: white;
+} 
+tbody:nth-child(even) {
+  background-color: #e6f7ff;
+} 
+
+th {
+    background-color: #b3e7ff;
+    color: #121211;   
+    text-align: center;   
+}
+
+.cautareInput{
+    width:100px;
+    background-color:  white;
+    
+        color: #121211;
+} 
+
+.cautareInputLiceu{
+    width:200px;
+    background-color:  white;
+   
+        color: #121211;
+}
+.form-control#choice{
+    margin-left: 0px;
+}
+
+.form-control{
+    margin-left:4px;
+}
+
+
+.column{
+    display: inline;
+         width: 33%;
+         float: left;
+}
+
+
+
+
+
+
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.content{
+	margin-left:0px;
+}
+.container {
+	
+	margin: 0 0;
+	width: 1200px;
+	height: 1000px;
+<<<<<<< .mine
+	/*background: white;*/
+||||||| .r13
+	background: white;
+=======
+	
+>>>>>>> .r15
+}
+
+<<<<<<< .mine
+||||||| .r13
+.row {
+height: 500px;
+background: yellow;
+	width: 1200px;
+}
+=======
+.row {
+height: 500px;
+
+	width: 1200px;
+}
+>>>>>>> .r15
+
+
+.table-bordered {
+	width: 1200px;
+    margin-top:100px;
+/*position: relative;*/
+}

@@ -1,0 +1,25 @@
+<div class = "listaElevi" >	
+	
+	<table class = "tabelElevi" >
+			<thead> 
+				<tr>
+					<th class="left-cell">ID</th>
+					<th class="midle-cell">Nume</th>
+					<th class="right-cell">Actiune</th>
+				</tr> 
+			</thead>
+			<tbody>
+				<tr ng-repeat="i in allProfils" >
+					<td class="left-cell">{{i.idProfil}}</td>
+					<td id="profil-name-{{i.idProfil}}" class="midle-cell" >{{i.denumireProfil}}</td>
+					<td style="display:none"  id="profil-name-txt-{{i.idProfil}}" class="midle-cell">
+						<input ng-model="i.denumireProfil" type="text" >
+					</td>
+					<td class="right-cell">
+						<input type="button" class="btn btn-primary edit" id="profil-edit{{i.idProfil}}" ng-click="clickEdit(i.idProfil,'profil',i)" value="Editare">
+						<input type="button" class="btn btn-danger" value="Stergere">
+					</td>	
+				</tr>
+			</tbody>
+	</table>
+</div>	

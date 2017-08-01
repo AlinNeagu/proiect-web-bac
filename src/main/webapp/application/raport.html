@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Raport</title>
+	<meta charset = "utf-8">
+	<link rel = "stylesheet" type = "text/css" href = "CSS/raport.css">
+	
+	
+	 <!-- <link rel = "stylesheet" type = "text/css" href = "search.css">   -->
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<!--Icon Library-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="node_modules/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+
+ 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src=JS/scriptHome.js> </script>
+	
+    
+	 	<script src="node_modules/angular/angular.min.js"></script>
+	 	<script src="node_modules/angular-route/angular-route.min.js"></script> 
+        <script src="JS/FileSaver.js"> </script>
+		<script type="text/javascript" src=JS/scriptHome.js> </script>
+    
+    
+</head>
+
+<body  ng-app="myApp" ng-controller="ListController">
+	<div class = "Menu" >
+        <ul>
+            <li ><a href = "search.html">Elev</a></li>
+            <li><a href = "raport.html">Raport</a></li>
+            <li style = "float:right"><a href="#user"><i class="fa fa-user"></i></a></li>
+            <li style = "float:right"><a href="#email"><i class="fa fa-envelope"></i></a></li>
+			<li style = "float:right"><a href="#email"><i class="fa fa-download" ng-click="download()"></i></a></li>
+        </ul>
+	</div>
+	
+	<div   class="container"  >
+	<div class = "row" >
+		<table class="table-bordered" >
+                 <thead>
+                     <tr>
+                        
+                        <th rowspan="2" scope='rowgroup'>Nume <br> <input class="cautareInput" ng-model="searchText.numeElev"></th>
+                        <th rowspan="2" scope='rowgroup'> Prenume <br> <input class="cautareInput" ng-model="searchText.prenumeElev"></th>
+                        <th rowspan="2" scope='rowgroup'>Iniţială tată</th>
+                        <th rowspan="2" scope='rowgroup'>Liceu <br> <input class="cautareInputLiceu" ng-model="searchText.liceuElev"></th>
+                        <th rowspan="2" scope='rowgroup'>Specializare</th>
+					 	<th colspan="3" scope='colgroup'>Limba Română </th>
+					 	<th rowspan="2"scope='rowgroup'>Limba modernă</th>
+					 	<th rowspan="2"scope='rowgroup'>Nota</th>
+                        <th colspan="3" scope='colgroup'>Disciplina obligatorie</th>
+					 	<th colspan="3" scope='colgroup'>Disciplina la alegere</th>
+                      </tr>
+                        <tr>
+                            
+					 	<th>Nota</th>
+					 	<th>Contestaţie</th>
+					 	<th>Nota finală</th>
+                        <th>Nota</th>
+					 	<th>Contestaţie</th>
+					 	<th>Nota finală</th>
+                        <th>Nota</th>
+					 	<th>Contestaţie</th>
+					 	<th>Nota finală</th>
+                         
+                         </tr>
+                 </thead>
+                    <tbody ng-repeat="personalDetail in items |filter:searchText">
+                       
+                        <div class="rand"  >
+                            <tr  >
+
+                              
+
+                                <td rowspan="2" scope='rowgroup'>{{personalDetail.numeElev}}</td>
+
+                                <td rowspan="2" scope='rowgroup'>{{personalDetail.prenumeElev}}</td>
+
+                                <td rowspan="2" scope='rowgroup'>{{personalDetail.initialaTata}}</td>
+
+                                <td rowspan="2" scope='rowgroup'>{{personalDetail.liceuElev}}</td>
+
+                                <td rowspan="2" scope='rowgroup'>{{personalDetail.specializare}}</td>
+
+                                <td colspan="3" scope='colgroup'> </td>
+
+                                <td rowspan="2"scope='rowgroup'>{{personalDetail.limbaModerna}}</td>
+
+                                <td rowspan="2"scope='rowgroup'>{{personalDetail.notaLimbaModerna}}</td>
+
+                                <td colspan="3" scope='colgroup'>{{personalDetail.probaObligatorie}}</td>
+
+                                <td colspan="3" scope='colgroup'>{{personalDetail.probaAlegere}}</td>
+
+                            </tr>
+                  
+                 
+                            <tr >
+                                 
+                                <td>{{personalDetail.notaLimbaMaterna}}</td>
+
+                                <td>{{personalDetail.notaContestatieLimbaMaterna}}</td>
+
+                                <td></td>
+
+                                <td>{{personalDetail.notaProbaObligatorie}}</td>
+
+                                <td>{{personalDetail.notaContestatieprobaObligatorie}}</td>
+
+                                <td></td>
+
+                                 <td>{{personalDetail.notaProbaAlegere}}</td>
+
+                                <td>{{personalDetail.notaContestatieprobaAlegere}}</td>
+
+                                <td></td>
+                            </tr>
+                            
+                        </div>
+                    </tbody>
+                </table>
+				
+
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+		<script src="scriptHome.js"></script>
+
+		
+	</div>
+	</div>
+	 
+	
+</body>
+
+</html>

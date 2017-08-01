@@ -1,0 +1,31 @@
+<div class = "listaElevi" >	
+	<fieldset>
+		<div class="select-container">
+			<span class="alin-span">Specializare: </span>
+			<select class="alin-select" ng-model="electedSpec" ng-options="probe.nume for probe in specializariForProbe">
+				<option value=""></option>
+			</select>
+		</div>
+	</fieldset>
+	<table class = "tabelElevi" >
+			<thead> 
+				<tr>
+					<th class="left-cell">ID</th>
+					<th class="midle-cell">Nume</th>
+					<th class="right-cell">Actiune</th>
+				</tr> 
+			</thead>
+			<tbody>
+				
+				<tr ng-repeat="i in profiluri" >
+					<td class="left-cell">{{i.id}}</td>
+					<td class="midel-cell">{{i.nume}}</td>
+					<td class="right-cell">
+					<input type="button" class="btn btn-primary edit" id="probe-edit{{i.id}}" ng-click="clickEdit(i.id,'probe')" value="Editare">
+					<input type="button" class="btn btn-danger" value="Stergere">
+					</td>	
+
+				</tr>
+			</tbody>
+	</table>
+</div>	
