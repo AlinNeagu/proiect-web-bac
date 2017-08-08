@@ -1672,5 +1672,17 @@ public class JSONController {
 
 	}
 	
-	
+	@RequestMapping(value = "/editDisciplina", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean editDisciplina(@RequestParam(name="id")int id,@RequestParam(name="numeNou")String numeNou){
+		Disciplina disc;
+		try {
+			disc=disciplinaDAO.findDisciplinaById(id);
+			disc.setDenumireDisciplina(numeNou);
+			disciplinaDAO.updateDisciplina(disc);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 }
